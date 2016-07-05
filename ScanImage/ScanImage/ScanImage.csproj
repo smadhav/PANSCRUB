@@ -89,9 +89,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageMasker.cs" />
+    <Compile Include="ImagePreProcessor.cs" />
+    <Compile Include="ImgScanData.cs" />
     <Compile Include="MSExcelExtractor.cs" />
-    <Compile Include="MSExtractor.cs" />
-    <Compile Include="MSWordExtractor.cs" />
+    <Compile Include="MSScanner.cs" />
+    <Compile Include="MSWordScanner.cs" />
     <Compile Include="PDFExtractor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
