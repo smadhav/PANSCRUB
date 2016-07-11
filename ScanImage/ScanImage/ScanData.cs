@@ -10,6 +10,7 @@ namespace ScanImage
     {
         public bool isSensitive=false;
         public string foundTxt="";
+        public int wConfidence = 0;
         public int[] bbox = new int[4];
         //public List<string> hOCRdata;
 

@@ -8,11 +8,40 @@ using System.Threading.Tasks;
 
 namespace ScanImage
 {
-    class ImgScanData
+    public class ImgScanData
     {
-        Size imgSize;
-        string imgName;
-        ImageFormat imgFormat;
-        List<ScanData> scanData;
+        public Size imgSize;
+        public string imgName;
+        public ImageFormat imgFormat;
+        public bool isScanCompleted;
+        public List<ScanData> scanData;
+
+
+        public override string ToString()
+        {
+            var retStr = "\n";
+            if (isScanCompleted == false )
+            {
+                return retStr;
+            }
+            else
+            {
+                if (scanData == null || scanData.Count == 0)
+                {
+                    retStr = "\n Image does not have pattern";
+                }
+                else
+                {
+                    foreach (ScanData item in scanData)
+                    {
+                        retStr = retStr + "\n\t\t" +
+                            "Text found: " + item.foundTxt +
+                                " Confidence: " + item.wConfidence;
+                    }
+                }
+                return retStr;
+            }
+
+        }
     }
 }

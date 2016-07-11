@@ -26,7 +26,7 @@ namespace ScanImage.Tests
             //string fileStr = @"./images/FIG1.bmp";
             //string fileStr = @"./images/3270_Sample1.gif";
             string fileStr = @"C:\Downloads\sample1FromWord.jpg";
-            List<ScanData> resultData = tScan.ScanForAccountNumber(fileStr);
+            ImgScanData resultData = tScan.ScanForAccountNumber(fileStr);
             Assert.IsNotNull(resultData);
 
         }
@@ -45,63 +45,63 @@ namespace ScanImage.Tests
         {
             var tScan = new TesseractScan();
             string fileStr = @"./images/screenshot.bmp";
-            List<ScanData> scanResult = tScan.ScanForAccountNumber(fileStr);
-            Assert.AreEqual(scanResult.Count,1);
-            Assert.AreEqual("4486100000052889",scanResult[0].foundTxt );
+            ImgScanData scanResult = tScan.ScanForAccountNumber(fileStr);
+            Assert.AreEqual(scanResult.scanData.Count,1);
+            Assert.AreEqual("4486100000052889",scanResult.scanData[0].foundTxt );
         }
         [TestMethod()]
         public void ScanSensitiveTestWithJPG()
         {
             var tScan = new TesseractScan();
             string fileStr = @"./images/screenshot.jpg";
-            List<ScanData> scanResult = tScan.ScanForAccountNumber(fileStr);
-            Assert.AreEqual(scanResult.Count, 1);
-            Assert.AreEqual("4486100000052889", scanResult[0].foundTxt);
+            ImgScanData scanResult = tScan.ScanForAccountNumber(fileStr);
+            Assert.AreEqual(scanResult.scanData.Count, 1);
+            Assert.AreEqual("4486100000052889", scanResult.scanData[0].foundTxt);
         }
         [TestMethod()]
         public void ScanSensitiveTestWithPNG()
         {
             var tScan = new TesseractScan();
             string fileStr = @"./images/screenshot.png";
-            List<ScanData> scanResult = tScan.ScanForAccountNumber(fileStr);
-            Assert.AreEqual(scanResult.Count, 1);
-            Assert.AreEqual("4486100000052889", scanResult[0].foundTxt);
+            ImgScanData scanResult = tScan.ScanForAccountNumber(fileStr);
+            Assert.AreEqual(scanResult.scanData.Count, 1);
+            Assert.AreEqual("4486100000052889", scanResult.scanData[0].foundTxt);
         }
         [TestMethod()]
         public void ScanSensitiveTestWithGIF()
         {
             var tScan = new TesseractScan();
             string fileStr = @"./images/screenshot.gif";
-            List<ScanData> scanResult = tScan.ScanForAccountNumber(fileStr);
-            Assert.AreEqual(scanResult.Count, 1);
-            Assert.AreEqual("4486100000052889", scanResult[0].foundTxt);
+            ImgScanData scanResult = tScan.ScanForAccountNumber(fileStr);
+            Assert.AreEqual(scanResult.scanData.Count, 1);
+            Assert.AreEqual("4486100000052889", scanResult.scanData[0].foundTxt);
         }
         [TestMethod()]
         public void ScanSensitiveTestWithLargeGIF()
         {
             var tScan = new TesseractScan();
             string fileStr = @"./images/screenshot-1.jpg";
-            List<ScanData> scanResult = tScan.ScanForAccountNumber(fileStr);
-            Assert.AreEqual(scanResult.Count, 1);
-            Assert.AreEqual(scanResult[0].foundTxt, "4245191198425385");
+            ImgScanData scanResult = tScan.ScanForAccountNumber(fileStr);
+            Assert.AreEqual(scanResult.scanData.Count, 1);
+            Assert.AreEqual(scanResult.scanData[0].foundTxt, "4245191198425385");
         }
         [TestMethod()]
         public void ScanSensitiveTestWithExtraLargeGIF()
         {
             var tScan = new TesseractScan();
             string fileStr = @"./images/screenshotScaled-1.jpg";
-            List<ScanData> scanResult = tScan.ScanForAccountNumber(fileStr);
-            Assert.AreEqual(scanResult.Count, 1);
-            Assert.AreEqual(scanResult[0].foundTxt, "4245191198425385");
+            ImgScanData scanResult = tScan.ScanForAccountNumber(fileStr);
+            Assert.AreEqual(scanResult.scanData.Count, 1);
+            Assert.AreEqual(scanResult.scanData[0].foundTxt, "4245191198425385");
         }
         [TestMethod()]
         public void ScanSensitiveTestWithGrayGIF()
         {
             var tScan = new TesseractScan();
             string fileStr = @"./images/screenshot-1_Gray.jpg";
-            List<ScanData> scanResult = tScan.ScanForAccountNumber(fileStr);
-            Assert.AreEqual(scanResult.Count, 1);
-            Assert.AreEqual(scanResult[0].foundTxt, "4245191198425385");
+            ImgScanData scanResult = tScan.ScanForAccountNumber(fileStr);
+            Assert.AreEqual(scanResult.scanData.Count, 1);
+            Assert.AreEqual(scanResult.scanData[0].foundTxt, "4245191198425385");
         }
         //ImageFromDoc.png
         [TestMethod]
@@ -110,9 +110,9 @@ namespace ScanImage.Tests
             var tScan = new TesseractScan();
             using (Bitmap img = (Bitmap)Image.FromFile(@".\images\ImageFromDoc.png"))
             {
-                List<ScanData> scanResult = tScan.ScanForAccountNumber(img);
-                Assert.AreEqual(2, scanResult.Count);
-                Assert.AreEqual(scanResult[0].foundTxt, "4060955111114579");
+                ImgScanData scanResult = tScan.ScanForAccountNumber(img);
+                Assert.AreEqual(2, scanResult.scanData.Count);
+                Assert.AreEqual(scanResult.scanData[0].foundTxt, "4060955111114579");
             }
             
         }

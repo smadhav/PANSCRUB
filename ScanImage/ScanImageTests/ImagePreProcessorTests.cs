@@ -19,7 +19,7 @@ namespace ScanImage.Tests
 
             using (Bitmap img = (Bitmap)Image.FromFile(@".\images\screenshot.gif"))
             {
-                ImagePreProcessor.AdjustDPI(img);
+                //ImagePreProcessor.AdjustDPI(img);
                 Assert.IsTrue(img.VerticalResolution >= 300);
                 //Bitmap bitImg = new Bitmap(img);
                 img.Save(@"C:\Downloads\screenshot_DPI.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);

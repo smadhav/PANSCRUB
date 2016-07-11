@@ -9,8 +9,10 @@ namespace ScanImage
 {
     interface MSScanner
     {
-         void extractImages(string fileName);
-        void replaceImage(Object MSDocument, string loc);
+        // void extractImages(string fileName);
+        DocScanData ScanForPattern(string fileName);
+        DocScanData ScanAndFixPattern(string fileName);
+        //void replaceImage(Object MSDocument, string loc);
 
     }
 }

@@ -89,13 +89,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocScanData.cs" />
     <Compile Include="ImageMasker.cs" />
-    <Compile Include="ImagePreProcessor.cs" />
     <Compile Include="ImgScanData.cs" />
     <Compile Include="MSExcelExtractor.cs" />
     <Compile Include="MSScanner.cs" />
     <Compile Include="MSWordScanner.cs" />
-    <Compile Include="PDFExtractor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScanData.cs" />

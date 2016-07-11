@@ -13,9 +13,9 @@ namespace ScanImage
 {
     public class TesseractScan
     {
-        public List<ScanData> ScanForAccountNumber(string fileName)
+        public ImgScanData ScanForAccountNumber(string fileName)
         {
-            List<ScanData> resultData = null;
+            ImgScanData resultData = null;
             try
             {
                 //using (var engine = new TesseractEngine(@"C:\Downloads\tessdata\tessdata-master\tessdata", "eng", EngineMode.Default))
@@ -35,34 +35,34 @@ namespace ScanImage
         }
 
         //Overload method to accept BMP image in memory
-        public List<ScanData> ScanForAccountNumber(Bitmap bmpImage)
+        public ImgScanData ScanForAccountNumber(Bitmap bmpImage)
         {
-            List<ScanData> resultData = null;
+            var imgData = new ImgScanData();
+            imgData.imgSize = bmpImage.Size;
+            imgData.imgFormat = bmpImage.RawFormat;
+            imgData.isScanCompleted = false;
+            imgData.scanData = null;
             try
             {
                 using (var engine = new TesseractEngine(@".\tessdata", "eng", EngineMode.Default))
                 {
                     engine.SetVariable("tessedit_char_whitelist", "0123456789");
-                    //Bitmap bmp = new Bitmap(new MemoryStream(imgByte));
-                    //using ( Pix img = Pix.LoadTiffFromMemory(imgByte))
-                    //{
-                        using (var page = engine.Process(bmpImage))
+                    using (var page = engine.Process(bmpImage))
                         {
-
-                            resultData = searchForAccount(page.GetHOCRText(1, true));
-                            Console.WriteLine("HOCR text:" + page.GetHOCRText(1, true));
-
+                            imgData.scanData = searchForAccount(page.GetHOCRText(1, true));
+                            //Console.WriteLine("HOCR text:" + page.GetHOCRText(1, true));
                         }
-                    //}
                 }
+                imgData.isScanCompleted = true;
             }
-
             catch (Exception ie)
             {
                 Console.WriteLine("Caught exception:" + ie);
+                imgData.isScanCompleted = false;
             }
-            return resultData;
+            return imgData;
         }
+        
         public  List<ScanData> searchForAccount(string hocrData)
         {
             var foundData = new List<ScanData>();
@@ -76,7 +76,6 @@ namespace ScanImage
             {
                 if (htmlDoc.DocumentNode != null)
                 {
-                    Console.WriteLine("Testing execution");
                     //Get a collection of nodes with ID word_*
                     HtmlNodeCollection wordNodes = htmlDoc.DocumentNode.SelectNodes("//*[@id[starts-with(.,'word_')]]");
                     if (wordNodes == null)
@@ -92,7 +91,7 @@ namespace ScanImage
                             //if current word match with pattern, mask that area
                             if (matchCardNumber(wordType.InnerText))
                             {
-                                Console.WriteLine("Text:" + wordType.OuterHtml);
+                                //Console.WriteLine("Text:" + wordType.OuterHtml);
                                 //TODO This is klude way, this need to be rewritten
                                 var outerStr = wordType.OuterHtml;
                                 string[] splitter = new string[] { "title=" };
@@ -109,11 +108,17 @@ namespace ScanImage
                                 tmpData.bbox[1] = Int32.Parse(tokens[2]);
                                 tmpData.bbox[2] = Int32.Parse(tokens[3]);
                                 tmpData.bbox[3] = Int32.Parse(tokens[4]);
+                                if(tokens.Count() >=8 && tokens[6].Equals("x_wconf"))
+                                {
+                                    tmpData.wConfidence = Convert.ToInt32(tokens[7].Replace("'"," "));
+                                }
 
 
                                 foundData.Add(tmpData);
-                                //Console.WriteLine("Cordinates:" + "X:");
-                                   
+                                //var title = wordType.Attributes["tittle"].Value;
+                               // Console.WriteLine(" Title" + title);
+
+
                             }
 
                         }
